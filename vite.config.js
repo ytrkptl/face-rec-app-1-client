@@ -3,7 +3,13 @@ import react from "@vitejs/plugin-react";
 import { fileURLToPath, URL } from "node:url";
 
 // // https://vitejs.dev/config/
-export default defineConfig(async () => {
+export default defineConfig(async ({ mode }) => {
+
+  const devOnlyBaseURL = import.meta?.env?.VITE_DEV_ONLY_BASE_URL || "http://localhost:5000";
+  const prodBaseURL = import.meta?.env?.VITE_PROD_BASE_URL || process?.env?.VITE_PROD_BASE_URL || "https://www.face-rec-app.yatrik.dev";
+
+  const baseURL = mode !== "production" ? prodBaseURL : devOnlyBaseURL
+
   return {
     plugins: [react()],
     build: {
@@ -14,7 +20,7 @@ export default defineConfig(async () => {
     server: {
       proxy: {
         "/api": {
-          target: `https://www.face-rec-app.yatrik.dev/api`
+          target: `${baseURL}/api`
         }
       }
     },
