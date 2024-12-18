@@ -1,3 +1,4 @@
+// TODO: This feature needs an update with apiFetch and firebase.
 import { useState, useRef, useEffect, useCallback } from "react";
 import Spinner from "../Spinner/Spinner";
 import "./Forgot.css";
@@ -25,7 +26,7 @@ const Forgot = () => {
     proceed: false,
     showStep2Status: false,
     showStep3Status: false,
-    stepNumber: 1,
+    stepNumber: 1
   });
   const {
     forgotEmail,
@@ -48,7 +49,7 @@ const Forgot = () => {
     proceed,
     showStep2Status,
     showStep3Status,
-    stepNumber,
+    stepNumber
   } = forgotState;
 
   const forgotEmailRef = useRef(null);
@@ -64,71 +65,41 @@ const Forgot = () => {
 
   useEffect(() => {
     if (stepNumber === 1 && forgotEmailRef.current) {
-      if (
-        forgotEmailRef.current.validity.valid === true &&
-        showForgotEmailError === true
-      ) {
+      if (forgotEmailRef.current.validity.valid === true && showForgotEmailError === true) {
         setForgotState({ ...forgotState, showForgotEmailError: false });
-      } else if (
-        forgotEmailRef.current.validity.valid === false &&
-        showForgotEmailError === false
-      ) {
+      } else if (forgotEmailRef.current.validity.valid === false && showForgotEmailError === false) {
         setForgotState({ ...forgotState, showForgotEmailError: true });
       }
     } else if (stepNumber === 2 && resetIdRef.current) {
       if (resetIdRef.current.validity.valid && showResetIdError) {
         setForgotState({ ...forgotState, showResetIdError: false });
-      } else if (
-        resetId !== "" &&
-        !resetIdRef.current.validity.valid &&
-        !showResetIdError
-      ) {
+      } else if (resetId !== "" && !resetIdRef.current.validity.valid && !showResetIdError) {
         setForgotState({ ...forgotState, showResetIdError: true });
       }
-    } else if (
-      stepNumber === 3 &&
-      newPasswordRef.current &&
-      confirmNewPasswordRef.current
-    ) {
+    } else if (stepNumber === 3 && newPasswordRef.current && confirmNewPasswordRef.current) {
       if (newPasswordRef.current.validity.valid && showNewPasswordError) {
         setForgotState({ ...forgotState, showNewPasswordError: false });
-      } else if (
-        !newPasswordRef.current.validity.valid &&
-        !showNewPasswordError
-      ) {
+      } else if (!newPasswordRef.current.validity.valid && !showNewPasswordError) {
         setForgotState({ ...forgotState, showNewPasswordError: true });
       }
-      if (
-        confirmNewPasswordRef.current.validity.valid &&
-        showConfirmPasswordError
-      ) {
+      if (confirmNewPasswordRef.current.validity.valid && showConfirmPasswordError) {
         setForgotState({ ...forgotState, showConfirmPasswordError: false });
-      } else if (
-        !confirmNewPasswordRef.current.validity.valid &&
-        !showConfirmPasswordError
-      ) {
+      } else if (!confirmNewPasswordRef.current.validity.valid && !showConfirmPasswordError) {
         setForgotState({ ...forgotState, showConfirmPasswordError: true });
       }
-      if (
-        newPasswordRef.current.validity.valid &&
-        confirmNewPasswordRef.current.validity.valid
-      ) {
+      if (newPasswordRef.current.validity.valid && confirmNewPasswordRef.current.validity.valid) {
         if (!showError) {
-          if (
-            newPasswordRef.current.value !== confirmNewPasswordRef.current.value
-          ) {
+          if (newPasswordRef.current.value !== confirmNewPasswordRef.current.value) {
             onShowError(true);
           }
         } else {
-          if (
-            newPasswordRef.current.value === confirmNewPasswordRef.current.value
-          ) {
+          if (newPasswordRef.current.value === confirmNewPasswordRef.current.value) {
             onShowError(false);
           }
         }
       }
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     forgotEmail,
     resetId,
@@ -140,7 +111,7 @@ const Forgot = () => {
     showResetIdError,
     showNewPasswordError,
     showConfirmPasswordError,
-    showError,
+    showError
   ]);
 
   const handleChange = (event) => {
@@ -154,7 +125,7 @@ const Forgot = () => {
       setForgotState({
         ...forgotState,
         showForgotEmailError: true,
-        forgotEmailErrorMessage: `Email is a required field and must include a proper email address. Example: abc@gmail.com`,
+        forgotEmailErrorMessage: `Email is a required field and must include a proper email address. Example: abc@gmail.com`
       });
       forgotEmailRef.current.classList.add("highlightClassInForgot");
       forgotEmailRef.current.focus();
@@ -162,24 +133,17 @@ const Forgot = () => {
     }
     setForgotState({
       ...forgotState,
-      showForgotEmailError: false,
+      showForgotEmailError: false
     });
     forgotEmailRef.current.classList.remove("highlightClassInForgot");
-
   };
 
   const onEnterKeyPressOnEmail = (event) => {
     if (event.key === "Enter" && forgotEmail === "") {
       onForgotEmailError(true);
-    } else if (
-      event.key === "Enter" &&
-      forgotEmailRef.current.validity.typeMismatch
-    ) {
+    } else if (event.key === "Enter" && forgotEmailRef.current.validity.typeMismatch) {
       onForgotEmailError(true);
-    } else if (
-      event.key === "Enter" &&
-      !forgotEmailRef.current.validity.typeMismatch
-    ) {
+    } else if (event.key === "Enter" && !forgotEmailRef.current.validity.typeMismatch) {
       onForgotEmailError(false);
       onSubmitForgotStep1();
     }
@@ -190,7 +154,7 @@ const Forgot = () => {
       setForgotState({
         ...forgotState,
         showResetIdError: true,
-        resetIdErrorMessage: "Reset Id is a required field",
+        resetIdErrorMessage: "Reset Id is a required field"
       });
       resetIdRef.current.classList.add("highlightClassInForgot");
       resetIdRef.current.focus();
@@ -198,7 +162,6 @@ const Forgot = () => {
     }
     setForgotState({ ...forgotState, showResetIdError: false });
     resetIdRef.current.classList.remove("highlightClassInForgot");
-
   };
 
   const onEnterKeyPressOnResetId = (event) => {
@@ -215,8 +178,7 @@ const Forgot = () => {
       setForgotState({
         ...forgotState,
         showNewPasswordError: true,
-        newPasswordErrorMessage:
-          "Password is a required field and must be between 8 - 10 characters.",
+        newPasswordErrorMessage: "Password is a required field and must be between 8 - 10 characters."
       });
       newPasswordRef.current.classList.add("highlightClassInForgot");
       newPasswordRef.current.focus();
@@ -224,16 +186,12 @@ const Forgot = () => {
     }
     setForgotState({ ...forgotState, showNewPasswordError: false });
     newPasswordRef.current.classList.remove("highlightClassInForgot");
-
   };
 
   const onEnterKeyPressOnPassword = (event) => {
     if (event.key === "Enter" && newPassword.length < 8) {
       onPasswordError(true);
-    } else if (
-      event.key === "Enter" &&
-      !newPasswordRef.current.validity.valid
-    ) {
+    } else if (event.key === "Enter" && !newPasswordRef.current.validity.valid) {
       onPasswordError(true);
     } else if (event.key === "Enter" && newPassword.length >= 8) {
       onPasswordError(false);
@@ -250,7 +208,7 @@ const Forgot = () => {
       setForgotState({
         ...forgotState,
         showConfirmPasswordError: true,
-        confirmPasswordErrorMessage: `Confirm New Password is a required field and must be between 8 - 10 characters`,
+        confirmPasswordErrorMessage: `Confirm New Password is a required field and must be between 8 - 10 characters`
       });
       confirmNewPasswordRef.current.classList.add("highlightClassInForgot");
       confirmNewPasswordRef.current.focus();
@@ -258,26 +216,14 @@ const Forgot = () => {
     }
     setForgotState({ ...forgotState, showConfirmPasswordError: false });
     confirmNewPasswordRef.current.classList.remove("highlightClassInForgot");
-
   };
 
   const onEnterKeyPressOnConfirmPassword = (event) => {
-    if (
-      event.key === "Enter" &&
-      confirmNewPasswordRef.current.value.length < 8
-    ) {
+    if (event.key === "Enter" && confirmNewPasswordRef.current.value.length < 8) {
       onConfirmPasswordError(true);
-
-    } else if (
-      event.key === "Enter" &&
-      !confirmNewPasswordRef.current.validity.valid
-    ) {
+    } else if (event.key === "Enter" && !confirmNewPasswordRef.current.validity.valid) {
       onConfirmPasswordError(true);
-
-    } else if (
-      event.key === "Enter" &&
-      confirmNewPasswordRef.current.value.length >= 8
-    ) {
+    } else if (event.key === "Enter" && confirmNewPasswordRef.current.value.length >= 8) {
       onConfirmPasswordError(false);
       if (newPassword === "") {
         newPasswordRef.current.focus();
@@ -287,7 +233,7 @@ const Forgot = () => {
     }
   };
 
-  const onSubmitForgotStep1 = () => {
+  const onSubmitForgotStep1 = async () => {
     if (forgotEmail === "" || forgotEmailRef.current.validity.typeMismatch) {
       onForgotEmailError(true);
     } else {
@@ -297,8 +243,8 @@ const Forgot = () => {
         method: "post",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          yourEmail: forgotEmail,
-        }),
+          yourEmail: forgotEmail
+        })
       })
         .then((response) => response.json())
         .then((data) => {
@@ -307,7 +253,7 @@ const Forgot = () => {
             showSpinner: false,
             stepNumber: 2,
             showStep2Status: true,
-            step2StatusMessage: data,
+            step2StatusMessage: data
           });
         })
         .catch((err) => {
@@ -315,7 +261,7 @@ const Forgot = () => {
             setForgotState({
               ...forgotState,
               forgotEmailErrorMessage: true,
-              showSpinner: false,
+              showSpinner: false
             });
           }
         });
@@ -329,15 +275,15 @@ const Forgot = () => {
       setForgotState({
         ...forgotState,
         showStep2Status: false,
-        showSpinner: true,
+        showSpinner: true
       });
       fetch(`/reset`, {
         method: "post",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           resetId: resetId,
-          yourEmail: forgotEmail,
-        }),
+          yourEmail: forgotEmail
+        })
       })
         .then((response) => response.json())
         .then((data) => {
@@ -347,7 +293,7 @@ const Forgot = () => {
               showSpinner: false,
               stepNumber: 3,
               proceed: true,
-              showResetIdError: false,
+              showResetIdError: false
             });
           } else if (data === "Reset Id did not match") {
             setForgotState({
@@ -356,7 +302,7 @@ const Forgot = () => {
               stepNumber: 2,
               proceed: false,
               resetIdErrorMessage: `${data}`,
-              showResetIdError: true,
+              showResetIdError: true
             });
           }
         })
@@ -366,7 +312,7 @@ const Forgot = () => {
             showSpinner: false,
             stepNumber: 2,
             proceed: false,
-            showResetIdError: true,
+            showResetIdError: true
           })
         );
     }
@@ -377,7 +323,7 @@ const Forgot = () => {
       setForgotState({
         ...forgotState,
         showError: true,
-        errorMessage: `Passwords must match`,
+        errorMessage: `Passwords must match`
       });
       newPasswordRef.current.classList.add("passwordsDontMatchClass");
       confirmNewPasswordRef.current.classList.add("passwordsDontMatchClass");
@@ -387,25 +333,18 @@ const Forgot = () => {
     setForgotState({ ...forgotState, showError: false });
     newPasswordRef.current.classList.remove("passwordsDontMatchClass");
     confirmNewPasswordRef.current.classList.remove("passwordsDontMatchClass");
-
   };
 
   const onPasswordReset = () => {
     if (newPassword === "" && confirmNewPassword === "") {
       onPasswordError(true);
       onConfirmPasswordError(true);
-
     } else if (!newPasswordRef.current.validity.valid) {
       onPasswordError(true);
-
     } else if (!confirmNewPasswordRef.current.validity.valid) {
       onConfirmPasswordError(true);
-
-    } else if (
-      newPasswordRef?.current?.value !== confirmNewPasswordRef.current.value
-    ) {
+    } else if (newPasswordRef?.current?.value !== confirmNewPasswordRef.current.value) {
       onShowError(true);
-
     } else {
       onPasswordError(false);
       onConfirmPasswordError(false);
@@ -416,8 +355,8 @@ const Forgot = () => {
         body: JSON.stringify({
           yourEmail: forgotEmail,
           newPassword: newPassword,
-          confirmNewPassword: confirmNewPassword,
-        }),
+          confirmNewPassword: confirmNewPassword
+        })
       })
         .then((response) => response.json())
         .then((data) => {
@@ -426,7 +365,7 @@ const Forgot = () => {
             setForgotState({
               ...forgotState,
               showStep3Status: true,
-              step3StatusMessage: `Password was successfully updated. Now taking you back to the sign in page.`,
+              step3StatusMessage: `Password was successfully updated. Now taking you back to the sign in page.`
             });
             setTimeout(() => navigate("signin"), 3000);
           } else {
@@ -435,7 +374,7 @@ const Forgot = () => {
               showSpinner: false,
               stepNumber: 3,
               showStep3Status: true,
-              step3StatusMessage: "Something went wrong. Please retry.",
+              step3StatusMessage: "Something went wrong. Please retry."
             });
           }
         })
@@ -445,7 +384,7 @@ const Forgot = () => {
             showSpinner: false,
             stepNumber: 3,
             showStep3Status: true,
-            step3StatusMessage: "Something went wrong. Please retry.",
+            step3StatusMessage: "Something went wrong. Please retry."
           });
         });
     }
@@ -455,18 +394,17 @@ const Forgot = () => {
     <article className="forgotArticle">
       <main className="forgotMain">
         <div className="forgotMeasure">
-          <fieldset id="forgot" className="forgotFieldset">
+          <fieldset
+            id="forgot"
+            className="forgotFieldset">
             <legend className="forgotLegend">Reset Password</legend>
             <h4 className="steps">{`Step ${stepNumber} of 3`}</h4>
-            {showStep2Status && (
-              <p className="forgotErrorDisplay">{step2StatusMessage}</p>
-            )}
+            {showStep2Status && <p className="forgotErrorDisplay">{step2StatusMessage}</p>}
             {showSpinner === null && proceed === false ? (
               <div className="belowLegendDivInForgot">
                 <label
                   className="belowLegendLabelInForgot"
-                  htmlFor="forgotEmail"
-                >
+                  htmlFor="forgotEmail">
                   Email
                 </label>
                 <input
@@ -480,9 +418,7 @@ const Forgot = () => {
                   onKeyDown={onEnterKeyPressOnEmail}
                 />
                 {showForgotEmailError && forgotEmailErrorMessage !== "" && (
-                  <p className="forgotErrorDisplay">
-                    {forgotEmailErrorMessage}
-                  </p>
+                  <p className="forgotErrorDisplay">{forgotEmailErrorMessage}</p>
                 )}
                 <input
                   onClick={onSubmitForgotStep1}
@@ -495,7 +431,9 @@ const Forgot = () => {
               showSpinner === false &&
               proceed === false && (
                 <div className="belowLegendDivInForgot">
-                  <label className="belowLegendLabelInForgot" htmlFor="resetId">
+                  <label
+                    className="belowLegendLabelInForgot"
+                    htmlFor="resetId">
                     Reset ID
                   </label>
                   <input
@@ -524,8 +462,7 @@ const Forgot = () => {
               <div className="belowLegendDivInForgot">
                 <label
                   className="belowLegendLabelInForgot"
-                  htmlFor="newPassword"
-                >
+                  htmlFor="newPassword">
                   New Password
                 </label>
                 <input
@@ -541,23 +478,16 @@ const Forgot = () => {
                   onKeyDown={onEnterKeyPressOnPassword}
                 />
                 {showNewPasswordError && newPasswordErrorMessage !== "" && (
-                  <p className="forgotErrorDisplay">
-                    {newPasswordErrorMessage}
-                  </p>
+                  <p className="forgotErrorDisplay">{newPasswordErrorMessage}</p>
                 )}
-                {showError && (
-                  <p className="forgotErrorDisplay forgotFieldsError">
-                    {errorMessage}
-                  </p>
-                )}
+                {showError && <p className="forgotErrorDisplay forgotFieldsError">{errorMessage}</p>}
               </div>
             )}
             {proceed && (
               <div className="belowLegendDivInForgot">
                 <label
                   className="belowLegendLabelInForgot"
-                  htmlFor="confirmNewPassword"
-                >
+                  htmlFor="confirmNewPassword">
                   Confirm New Password
                 </label>
                 <input
@@ -572,22 +502,11 @@ const Forgot = () => {
                   onChange={handleChange}
                   onKeyDown={onEnterKeyPressOnConfirmPassword}
                 />
-                {showConfirmPasswordError &&
-                  confirmPasswordErrorMessage !== "" && (
-                    <p className="forgotErrorDisplay">
-                      {confirmPasswordErrorMessage}
-                    </p>
-                  )}
-                {showError && (
-                  <p className="forgotErrorDisplay forgotFieldsError">
-                    {errorMessage}
-                  </p>
+                {showConfirmPasswordError && confirmPasswordErrorMessage !== "" && (
+                  <p className="forgotErrorDisplay">{confirmPasswordErrorMessage}</p>
                 )}
-                {showStep3Status && (
-                  <p className="forgotErrorDisplay forgotFieldsError">
-                    {step3StatusMessage}
-                  </p>
-                )}
+                {showError && <p className="forgotErrorDisplay forgotFieldsError">{errorMessage}</p>}
+                {showStep3Status && <p className="forgotErrorDisplay forgotFieldsError">{step3StatusMessage}</p>}
               </div>
             )}
             {proceed && (
@@ -605,14 +524,12 @@ const Forgot = () => {
           <div className="belowForgotButtonDiv">
             <p
               onClick={() => navigate("/signin")}
-              className="registerLinkInForgot"
-            >
+              className="registerLinkInForgot">
               Go Back to Sign In
             </p>
             <p
               onClick={() => navigate("/register")}
-              className="registerLinkInForgot"
-            >
+              className="registerLinkInForgot">
               Register
             </p>
           </div>
