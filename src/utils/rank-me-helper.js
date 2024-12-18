@@ -1,5 +1,5 @@
 import { logToFirestore } from "@/services/firebase.utils";
-
+import { apiFetch } from "@/services/api-service";
 /**
  * Fetches rank data from the API
  * @param {number} entries - Number of entries to get rank for
@@ -8,15 +8,9 @@ import { logToFirestore } from "@/services/firebase.utils";
  */
 const fetchRankMe = async (entries, baseURL) => {
   try {
-    const response = await fetch(`${baseURL}/api/rank-me?entries=${entries}`, {
+    return await apiFetch(`${baseURL}/api/rank-me?entries=${entries}`, {
       method: "GET"
     });
-
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
-
-    return await response.json();
   } catch (error) {
     // Log the error to firestore
     await logToFirestore("Failed to get rank", "error", { error });
