@@ -3,12 +3,11 @@ import { apiFetch } from "@/services/api-service";
 /**
  * Fetches rank data from the API
  * @param {number} entries - Number of entries to get rank for
- * @param {string} baseURL - Base URL for the site.
  * @returns {Promise<Object>} - Promise that resolves to rank data
  */
-const fetchRankMe = async (entries, baseURL) => {
+const fetchRankMe = async (entries) => {
   try {
-    return await apiFetch(`${baseURL}/api/rank-me?entries=${entries}`, {
+    return await apiFetch(`rank-me?entries=${entries}`, {
       method: "GET"
     });
   } catch (error) {
