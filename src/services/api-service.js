@@ -1,10 +1,10 @@
-const devOnlyBaseURL = import.meta?.env?.VITE_DEV_ONLY_BASE_API_URL || "http://localhost:5000";
-const prodBaseURL =
-  import.meta?.env?.VITE_PROD_BASE_API_URL ||
-  process?.env?.VITE_PROD_BASE_API_URL ||
-  "https://www.face-rec-app-api.yatrik.dev";
+let baseURLForApi;
 
-const baseURLForApi = mode !== "production" ? prodBaseURL : devOnlyBaseURL;
+if (import.meta.env.MODE === "production") {
+  baseURLForApi = import.meta?.env?.VITE_PROD_BASE_API_URL || "https://www.face-rec-app-api.yatrik.dev";
+} else {
+  baseURLForApi = import.meta?.env?.VITE_DEV_ONLY_BASE_API_URL || "http://localhost:5000";
+}
 
 export const apiFetch = async (endpoint, options = {}) => {
   const url = `${baseURLForApi}/api${endpoint}`;
