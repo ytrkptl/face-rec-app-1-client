@@ -7,7 +7,7 @@ if (import.meta.env.MODE === "production") {
 }
 
 export const apiFetch = async (endpoint, options = {}) => {
-  const url = `${baseURLForApi}/api${endpoint}`;
+  const url = `${baseURLForApi}/api/${endpoint}`;
   const response = await fetch(url, options);
   if (!response.ok) {
     throw new Error(`HTTP error! status: ${response.status}`);
