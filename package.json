@@ -13,7 +13,8 @@
     "preview": "vite preview",
     "format": "prettier --write src/",
     "lint:fix": "eslint --fix .",
-    "firebase-dev": "firebase emulators:start --project ci4-face-rec-app-nov2024"
+    "firebase-dev": "firebase emulators:start --project ci4-face-rec-app-nov2024",
+    "kill-ports": "npx kill-port 8080 9099 4000 5173 8888"
   },
   "dependencies": {
     "@reduxjs/toolkit": "^2.2.7",
